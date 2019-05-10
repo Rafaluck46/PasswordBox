@@ -1,0 +1,45 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Passwords";
+}
+
+<a class=" btn btn-primary" asp-page="/AddPwd"  asp-route-id="0">Nova Senha</a>
+          <div class="mb-5">
+              <label for="searchInput">Pesquisar</label>
+              <input type="text" class="form-control col-4" id="searchInput">
+        </div>
+        
+        <div class="text-center">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Senha</th>
+              <th scope="col">Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var passview in Model.PassViewModel)
+            {
+              <tr class="visible-search">
+                <td>@passview.Id</td>
+                <td>@passview.Nome</td>
+                <td>@passview.Pwd</td>
+                <td>
+                  <div class="form-group">
+                  <form method="post" style="display:inline-block"> 
+                    <button class="btn btn-primary" type="submit" asp-page="/Index" asp-page-handler="edit" asp-route-id="@passview.Id">Editar</button>
+                  </form> 
+                  <form method="post" style="display:inline-block"> 
+                    <button class="btn btn-danger" type="submit" asp-page="/AddPwd" asp-page-handler="delete" asp-route-id="@passview.Id">Excluir</button>
+                  </form>
+                  </div>
+                    </td>
+              </tr>        
+            }
+          </tbody>
+        </table>
+        </div>
+
