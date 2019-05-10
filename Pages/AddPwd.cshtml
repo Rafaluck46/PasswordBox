@@ -4,15 +4,15 @@
     ViewData["Title"] = "Edição";
 }
 
-<h1>Edição de Password</h1>
+<h1>Nova Senha</h1>
 <form method="post">
     <div>
          <div class="form-group">
         <input class="form-control col-4" asp-for="Password.Id" type="hidden" />
-        <label asp-for="Password.Nome"></label>
+        <label asp-for="Password.Login"></label>
         <div>
-            <input class="form-control col-4" asp-for="Password.Nome" />
-            <span asp-validation-for="Password.Nome" ></span>
+            <input class="form-control col-4" asp-for="Password.Login" />
+            <span asp-validation-for="Password.Login" ></span>
         </div>
         </div>
           <div class="form-group">
@@ -20,6 +20,11 @@
             <label asp-for="Password.Pwd">Password</label>
             <input class="form-control col-4" asp-for="Password.Pwd" />
                 <span asp-validation-for="Password.Pwd" ></span>
+        </div>
+        <div>
+            <label asp-for="Password.Descricao">Descrição</label>
+            <input class="form-control col-4" asp-for="Password.Descricao" />
+                <span asp-validation-for="Password.Descricao" ></span>
         </div>
         </div>
     </div>

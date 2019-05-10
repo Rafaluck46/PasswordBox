@@ -13,8 +13,9 @@ namespace PasswordBox.Pages
         public class PasswordViewModel
         {
             public int Id { get; set; }
-            public string Nome { get; set; }
+            public string Login { get; set; }
             public string Pwd { get; set; }
+            public string Descricao { get; set; }
 
         }
 
@@ -35,8 +36,9 @@ namespace PasswordBox.Pages
             Password = new PasswordViewModel()
             {
                 Id = pass.Id,
-                Nome = pass.Nome,
+                Login = pass.Login,
                 Pwd = pass.Pwd,
+                Descricao = pass.Descricao,
             };
         }
 
@@ -44,8 +46,9 @@ namespace PasswordBox.Pages
         {
             var entidade = new Entities.Password();
             entidade.Id = Password.Id;
-            entidade.Nome = Password.Nome;
+            entidade.Login = Password.Login;
             entidade.Pwd = Password.Pwd;
+            entidade.Descricao = Password.Descricao;
 
             if (entidade.Id == 0)
                 _context.Password.Add(entidade);

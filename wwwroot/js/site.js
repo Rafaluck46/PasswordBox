@@ -16,7 +16,7 @@ if (input) {
     var rows = table.querySelectorAll('tr');
     var indexName = 0;
     var idexPassword = 0;
-    indexName = [...rows[0].cells].find(x => x.textContent == "Nome").cellIndex;
+    indexName = [...rows[0].cells].find(x => x.textContent == "Login").cellIndex;
     indexPassword = [...rows[0].cells].find(x => x.textContent == "Senha").cellIndex;
 
     rows.forEach(row => {
@@ -35,31 +35,61 @@ if (input) {
   });
 }
 
-document.querySelector('#input-drop').addEventListener('dragenter', function (event) {
-  event.preventDefault();
-  var element = document.querySelector('.container.white.p-3.shadow');
-});
+var areaDrop = document.querySelector('#input-drop');
+if (areaDrop) {
 
-document.querySelector('#input-drop').addEventListener('dragover', function (event) {
-  event.preventDefault();
-  event.dataTransfer.dropEffect = "copy";
-})
+  areaDrop.addEventListener('dragenter', function (event) {
+    event.preventDefault();
+    var element = document.querySelector('.container.white.p-3.shadow');
+  });
 
-document.querySelector('#input-drop').addEventListener('drop', function (event) {
-  event.preventDefault();
-  debugger;
-  var data = event.dataTransfer.files;
-  debugger;
-  fetch('/api/Upload',{
-    method:'POST',
-    headers: {
-      'Content-Type':'application/json'
-    },
-    body: data[0]
+  areaDrop.addEventListener('dragover', function (event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "copy";
   })
-  alert(data);
-});
 
-document.querySelector('#input-drop').addEventListener('dragleave', function (event) {
-  event.preventDefault();
-})
+  areaDrop.addEventListener('drop', function (event) {
+    event.preventDefault();
+    var file = event.dataTransfer.files[0];
+    let fileReader = new FileReader();
+    fileReader.readAsText(file);
+    fileReader.addEventListener('loadend', function (event) {
+
+      try {
+        let lines = event.target.result.split('\n');
+        var array = new Array();
+        lines.forEach(x => {
+          var string = x.split(' ');
+          var json = {
+            id: 0,
+            login: string[0].split(':')[1].trim(),
+            pwd: string[1].split(':')[1].trim(),
+            descricao: string[2].split(':')[1].trim(),
+          }
+          array.push(json);
+        });
+      } catch{
+        alert('Erro ao ler arquivo.');
+        return;
+      }
+
+      fetch('/api/Upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(array)
+      }).then((value) => {
+        window.location.href = "/";
+      }).catch((err) => {
+        alert(err);
+      })
+
+    });
+
+  });
+
+  areaDrop.addEventListener('dragleave', function (event) {
+    event.preventDefault();
+  });
+}

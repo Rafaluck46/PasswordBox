@@ -19,8 +19,9 @@ namespace PasswordBox.Pages
         public class PasswordViewModel
         {
             public int Id { get; set; }
-            public string Nome { get; set; }
+            public string Login { get; set; }
             public string Pwd { get; set; }
+            public string Descricao { get; set; }
 
         }
 
@@ -32,8 +33,9 @@ namespace PasswordBox.Pages
                 PassViewModel.Add(new PasswordViewModel()
                 {
                     Id = x.Id,
-                    Nome = x.Nome,
-                    Pwd = x.Pwd
+                    Login = x.Login,
+                    Pwd = x.Pwd,
+                    Descricao = x.Descricao
                 });
             });
         }
